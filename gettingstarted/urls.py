@@ -1,6 +1,9 @@
-from django.urls import path, include
+from django.urls import url, path, include
 
 from django.contrib import admin
+
+
+from rest_framework_jwt.views import obtain_jwt_token
 
 admin.autodiscover()
 
@@ -18,4 +21,7 @@ urlpatterns = [
     path("", hello.views.index, name="index"),
     path("db/", hello.views.db, name="db"),
     path("admin/", admin.site.urls),
+    url(r'^api-token-auth/', obtain_jwt_token),
+	url('cardapp/', include('cardapp.api.urls')),  
 ]
+

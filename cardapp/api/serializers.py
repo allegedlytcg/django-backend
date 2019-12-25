@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from customApp_bloodPressure.models import BloodPressure
+from cardapp.models import BloodPressure
 # Turns models to json data using django REST framework(alternatively use pure django api, alt use pure python)
 # Serializers -> Json IMPORTANT CONCEPT
 # Serializers -> validate data IMPORTANT CONCEPT

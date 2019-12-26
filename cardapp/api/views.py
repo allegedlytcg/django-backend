@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 
 
 from django.http import HttpResponse
-from cardapp.models import BloodPressure
+from customApp_bloodPressure.models import BloodPressure
 from .serializers import BloodPressureSerializer
 
 

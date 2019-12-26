@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "hello",
     "cardapp",
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -52,8 +53,17 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-]
 
+
+]
+MIDDLEWARE_CLASSES = (
+    #...
+    'python-getting-started.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.BrokenLinkEmailsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    #...
+)
 ROOT_URLCONF = "gettingstarted.urls"
 
 TEMPLATES = [
@@ -71,6 +81,14 @@ TEMPLATES = [
         },
     }
 ]
+CORS_ORIGIN_ALLOW_ALL = False
+
+CORS_ORIGIN_WHITELIST = (
+    'https://newpkmtcg.herokuapp.com/',
+    'http//:localhost:8000',
+    '0.0.0.0:5000',
+    'https://hardcore-boyd-45f941.netlify.com/',
+)
 
 WSGI_APPLICATION = "gettingstarted.wsgi.application"
 
@@ -100,7 +118,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         #'rest_framework.authentication.BasicAuthentication',
         #'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication'
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+
 
     ),
     'DEFAULT_PERMISSION_CLASSES': (

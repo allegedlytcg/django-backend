@@ -28,7 +28,7 @@ SECRET_KEY = "CHANGE_ME!!!! (P.S. the SECRET_KEY environment variable will be us
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+#extra subtle change =remove me=
 
 # Application definition
 
@@ -57,13 +57,13 @@ MIDDLEWARE = [
 
 
 ]
-MIDDLEWARE_CLASSES = (
-    #...
+# MIDDLEWARE_CLASSES = (
+#     #...
 
-    'django.middleware.common.BrokenLinkEmailsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    #...
-)
+#     'django.middleware.common.BrokenLinkEmailsMiddleware',
+#     'django.middleware.common.CommonMiddleware',
+#     #...
+# )
 ROOT_URLCONF = "gettingstarted.urls"
 
 TEMPLATES = [
@@ -81,14 +81,15 @@ TEMPLATES = [
         },
     }
 ]
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = False
 
-# CORS_ORIGIN_WHITELIST = (
-#     'https://newpkmtcg.herokuapp.com/',
-#     'http//:localhost:8000',
-#     '0.0.0.0:5000',
-#     'https://hardcore-boyd-45f941.netlify.com/',
-# )
+CORS_ORIGIN_WHITELIST = (
+    'https://newpkmtcg.herokuapp.com/',
+    'http//:localhost:8000',
+    '0.0.0.0:5000',
+    'https://hardcore-boyd-45f941.netlify.com/',
+    '99.99.53.127'
+)
 
 WSGI_APPLICATION = "gettingstarted.wsgi.application"
 

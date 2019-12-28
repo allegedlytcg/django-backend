@@ -16,8 +16,8 @@ class BloodPressureSerializer(serializers.ModelSerializer):#checks these fields 
 		model = BloodPressure
 		fields =[
 			'bpId',
-			'dpressure',
-			'spressure',
+			'dPressure',
+			'sPressure',
 			'heartrate',
 			'user',
 			'timestamp'

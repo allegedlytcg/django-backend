@@ -18,7 +18,7 @@ class BloodPressureSerializer(serializers.ModelSerializer):#checks these fields 
 			'bpId',
 			'dPressure',
 			'sPressure',
-			'heartrate',
+			'heartRate',
 			'user',
 			'timestamp'
 
@@ -33,9 +33,9 @@ class BloodPressureSerializer(serializers.ModelSerializer):#checks these fields 
 		print(str(type(data)))
 
 
-		content = data.get("dpressure", None)
+		content = data.get("dPressure", None)
 		if content == "":
 			content = None
 		if content is None:
-			raise serializers.ValidationError("dpressure is required.")
+			raise serializers.ValidationError("dPressure is required.")
 		return data

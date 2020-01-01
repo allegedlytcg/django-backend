@@ -51,6 +51,7 @@ class BloodPressureAPIView(mixins.CreateModelMixin,
 		passed_id 		  = json_data.get('bpId', None) 
 		passed_start_date = json_data.get('start_date', None)
 		passed_end_date   = json_data.get('end_date', None)
+		
 		print("Id passed is: " + str(passed_id))
 		print("Start date passed  " + str(passed_start_date))
 		print("End date passed  " + str(passed_end_date))

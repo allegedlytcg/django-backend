@@ -99,8 +99,6 @@ class Deck(models.Model):
 
     deckId              = models.AutoField(primary_key=True)
 
-    cardTransactId      = models.ForeignKey(CardTransact, blank = False, null=False)
-
     deckName            = models.TextField(max_length=3, null = False, blank= False)
 
 

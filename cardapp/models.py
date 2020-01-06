@@ -145,7 +145,7 @@ class CardTransact(models.Model):
 
     cardTransactId      = models.AutoField(primary_key=True)
 
-    deckId              = models.ForeignKey(Deck, blank = False, null=False)
+    deckId              = models.ForeignKey(Deck, on_delete=models.CASCADE, blank = False, null=False)
 
     cardId              = models.TextField(null = False, blank= False)#installed with pkm api
 

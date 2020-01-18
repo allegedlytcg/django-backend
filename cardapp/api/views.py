@@ -174,9 +174,10 @@ class DeckAPIView(mixins.CreateModelMixin,
 					cardTransactSerializer.is_valid()#must be called before save, regardless that we've already validated prior to this
 					cardTransactSerializer.save()
 					json_data.pop('cardId', None)#remove to make room for the next cardId issued in default deck
-			except:
+			except Exception as e: 
+				# print(e)
 				print("Invalid data was sent")
-				return HttpResponseBadRequest("Caught at attempt of creation of deck and child records" + str(returned_response))
+				return HttpResponseBadRequest("Caught at attempt of creation of deck and child records: error was" + str(e))
 
 
 

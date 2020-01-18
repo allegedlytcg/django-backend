@@ -130,7 +130,32 @@ class DeckAPIView(mixins.CreateModelMixin,
 
 
 			try:
-				print("Voltages have been confirmed as valid data")
+				#TODO FIX THIS BULL SHIT
+				#TODO FIX THIS BULL SHIT
+				#TODO FIX THIS BULL SHIT
+				#TODO FIX THIS BULL SHIT
+				#TODO FIX THIS BULL SHIT
+				#TODO FIX THIS BULL SHIT
+				#TODO FIX THIS BULL SHIT
+				#TODO FIX THIS BULL SHIT
+
+
+
+				#TODO FIX THIS BULL SHIT
+				#TODO FIX THIS BULL SHIT
+				#TODO FIX THIS BULL SHIT
+				#TODO FIX THIS BULL SHIT
+				#TODO FIX THIS BULL SHIT
+				#TODO FIX THIS BULL SHIT
+				#TODO FIX THIS BULL SHIT
+
+
+
+
+
+
+
+
 				returned_response 	 = self.create(request, *args, **kwargs) #creates the parent Deck record
 				content_of_response  = returned_response.data
 				new_deckId 			 = content_of_response.get('deckId')#gets the parent id value for the child table(EkgVoltageReadings)
@@ -151,7 +176,7 @@ class DeckAPIView(mixins.CreateModelMixin,
 					json_data.pop('cardId', None)#remove to make room for the next cardId issued in default deck
 			except:
 				print("Invalid data was sent")
-				return HttpResponseBadRequest("Caught at attempt of creation of deck and child records")
+				return HttpResponseBadRequest("Caught at attempt of creation of deck and child records" + str(returned_response))
 
 
 

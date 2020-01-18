@@ -22,7 +22,7 @@ class DeckSerializer(serializers.ModelSerializer):#checks these fields and/or re
 
 	def validate(self, data): #takes int he raw data we need using serializer for entire data
 		print('Deck Serializer validates here')
-		activeDeck = data.get("activeDeck", None)
+		deckId = data.get("deckId", None)
 		if deckId == "":
 			deckId = None
 		if deckId is None :

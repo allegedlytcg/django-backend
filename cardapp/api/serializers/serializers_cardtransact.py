@@ -23,7 +23,7 @@ class CardTransactSerializer(serializers.ModelSerializer):
 
 	def validate(self, data): 
 		deckId			= data.get("deckId", None)
-		ekgId 			= data.get("cardId", None)
+		cardId 			= data.get("cardId", None)
 		print('Card Transact validates here')
 		if deckId == "":#
 			deckId = None

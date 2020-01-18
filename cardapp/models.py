@@ -99,7 +99,7 @@ class Deck(models.Model):
 
     deckId              = models.AutoField(primary_key=True)
 
-    deckName            = models.TextField(max_length=3, null = False, blank= False)
+    activeDeck          = models.IntegerField(max_length=1, null = False, blank= False, default=1)
 
 
     def __str__(self):                                  #Sets the name of the object
@@ -147,7 +147,7 @@ class CardTransact(models.Model):
 
     deckId              = models.ForeignKey(Deck, on_delete=models.CASCADE, blank = False, null=False)
 
-    cardId              = models.TextField(null = False, blank= False)#installed with pkm api
+    cardId              = models.TextField(null = False, blank= False)#cross reference to public pokemon api
 
 
     def __str__(self):                                  #Sets the name of the object

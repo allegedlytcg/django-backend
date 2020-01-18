@@ -151,7 +151,7 @@ class DeckAPIView(mixins.CreateModelMixin,
 					json_data.pop('cardId', None)#remove to make room for the next cardId issued in default deck
 			except:
 				print("Invalid data was sent")
-				return HttpResponseBadRequest("One or more passed values are invalid")
+				return HttpResponseBadRequest("Caught at attempt of creation of deck and child records")
 
 
 

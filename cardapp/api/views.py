@@ -11,7 +11,7 @@ import time
 from http.client import responses
 
 from django.http import HttpResponse, HttpResponseBadRequest
-# from customApp_ekg.models import Ekg, EkgVoltageReadings
+from cardapp.models import Deck, CardTransact
 from .serializers.serializers_deck import DeckSerializer
 from .serializers.serializers_cardtransact import CardTransactSerializer
 

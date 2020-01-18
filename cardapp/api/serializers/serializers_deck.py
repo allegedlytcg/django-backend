@@ -13,7 +13,7 @@ class DeckSerializer(serializers.ModelSerializer):#checks these fields and/or re
 		fields =[
 			'deckId',
 			'user',
-			'activeDeck'
+		
 		]
 		read_only_fields = ['user']
 
@@ -25,9 +25,7 @@ class DeckSerializer(serializers.ModelSerializer):#checks these fields and/or re
 		activeDeck = data.get("activeDeck", None)
 		if deckId == "":
 			deckId = None
-		if activeDeck == "":
-			activeDeck = None
-		if activeDeck is None or deckId is None :
+		if deckId is None :
 			raise serializers.ValidationError("One or more fields passed are invalid.")
 		return data
 

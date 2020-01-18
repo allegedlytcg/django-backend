@@ -3,7 +3,8 @@ from .views import *
 
 
 urlpatterns = [
-    url(r'^$', BloodPressureAPIView.as_view()),#cardapp/
+    url(r'^$', DeckAPIView.as_view()),#cardapp/
+    url('cardTransactions/', CardTransactAPIView.as_view())
 
 
 

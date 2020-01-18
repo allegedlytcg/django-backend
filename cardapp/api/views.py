@@ -11,13 +11,13 @@ import time
 from http.client import responses
 
 from django.http import HttpResponse, HttpResponseBadRequest
-from customApp_ekg.models import Ekg, EkgVoltageReadings
+# from customApp_ekg.models import Ekg, EkgVoltageReadings
 from .serializers.serializers_deck import DeckSerializer
 from .serializers.serializers_cardtransact import CardTransactSerializer
 
 
 #########################EkgAPIView############################################################
-# Class    : EkgAPIView
+# Class    : DeckAPIView
 # Purpose  : Implements CRUD using a single endpoints 
 # Workflow : Maps the incoming response (get, post, put, patch, delete) to a method
 #            defined below. 
@@ -34,46 +34,46 @@ def is_json(json_data):
 		is_valid = False
 	return is_valid
 
-def validate_child_records(passed_voltages, ekgtags, ptags, json_data):#batch validation for voltages for an 'all or none' effect
-	try:
-		dumbyEkgId 		 = {'ekgId': 1}#safe because no values are actually saved here
-		json_data.update(dumbyEkgId)
+# def validate_child_records(passed_voltages, ekgtags, ptags, json_data):#batch validation for voltages for an 'all or none' effect
+# 	try:
+# 		dumbyEkgId 		 = {'ekgId': 1}#safe because no values are actually saved here
+# 		json_data.update(dumbyEkgId)
 
-		print('\n\n\n')
-		for indice in range(0, len(passed_voltages)):
-			voltage_value = passed_voltages[indice]
-			ekgtag_value  = ekgtags[indice]
-			ptag_value	  = ptags[indice]
-			#kept for debugging purposes
-			# print("Voltage value at indice:" + str(indice) + ": is of value: " + str(voltage_value))
-			# print("ekgtag_value value at indice:" + str(indice) + ": is of value: "  + str(ekgtag_value))
-			# print("ptag_value value at indice:" + str(indice) +": is of value: " + str(ptag_value))
-			volt_pair   = {'voltage_reading': voltage_value}
-			ekgtag_pair	= {'ekgtag': ekgtag_value}
-			ptag_pair   = {'ptag': ptag_value}
+# 		print('\n\n\n')
+# 		for indice in range(0, len(passed_voltages)):
+# 			voltage_value = passed_voltages[indice]
+# 			ekgtag_value  = ekgtags[indice]
+# 			ptag_value	  = ptags[indice]
+# 			#kept for debugging purposes
+# 			# print("Voltage value at indice:" + str(indice) + ": is of value: " + str(voltage_value))
+# 			# print("ekgtag_value value at indice:" + str(indice) + ": is of value: "  + str(ekgtag_value))
+# 			# print("ptag_value value at indice:" + str(indice) +": is of value: " + str(ptag_value))
+# 			volt_pair   = {'voltage_reading': voltage_value}
+# 			ekgtag_pair	= {'ekgtag': ekgtag_value}
+# 			ptag_pair   = {'ptag': ptag_value}
 
-			json_data.update(volt_pair)
-			json_data.update(ekgtag_pair)
-			json_data.update(ptag_pair)
+# 			json_data.update(volt_pair)
+# 			json_data.update(ekgtag_pair)
+# 			json_data.update(ptag_pair)
 
 
-			ekgVoltageSerializer = EkgVoltageSerializer(data=json_data)	
-			if ekgVoltageSerializer.is_valid():
+# 			ekgVoltageSerializer = EkgVoltageSerializer(data=json_data)	
+# 			if ekgVoltageSerializer.is_valid():
 
-				json_data.pop('voltage_reading', None)#remove to make room for the next voltage reading
-				json_data.pop('ekgtag', None)#remove to make room for the next ekgtag
-				json_data.pop('ptag', None)#remove to make room for the next ptag
+# 				json_data.pop('voltage_reading', None)#remove to make room for the next voltage reading
+# 				json_data.pop('ekgtag', None)#remove to make room for the next ekgtag
+# 				json_data.pop('ptag', None)#remove to make room for the next ptag
 				
-			else:
-				return False
-		json_data.pop('ekgId', None)
-		return True
-	except:
-		return False
+# 			else:
+# 				return False
+# 		json_data.pop('ekgId', None)
+# 		return True
+# 	except:
+# 		return False
 	
 
 
-class EkgAPIView(mixins.CreateModelMixin,
+class DeckAPIView(mixins.CreateModelMixin,
  generics.ListAPIView):
 
 
@@ -94,21 +94,16 @@ class EkgAPIView(mixins.CreateModelMixin,
 		#get the json data of passed key's or they don't exist
 		if is_json(body_):
 			json_data 			= json.loads(request.body)
-		passed_id 		  = json_data.get('ekgId', None) 
-		passed_start_date = json_data.get('start_date', None)
-		passed_end_date   = json_data.get('end_date', None)
-		print("Id passed is: " + str(passed_id))
-		print("Start date passed  " + str(passed_start_date))
-		print("End date passed  " + str(passed_end_date))
+		passed_id 		  = json_data.get('deckId', None) 
 		if passed_id is not None:												 #return object of id
-			qs = Ekg.objects.all().filter(user=request.user).filter(id = passed_id)
-		elif passed_end_date is not None and passed_start_date is not None:#return objects of the date range
-			qs = Ekg.objects.all().filter(user=request.user).filter(
-		    timestamp__gte = passed_start_date,
-		    timestamp__lt = passed_end_date,
-			).distinct()
+			qs = Deck.objects.all().filter(user=request.user).filter(id = passed_id)
+		# elif passed_end_date is not None and passed_start_date is not None:#return objects of the date range
+		# 	qs = Ekg.objects.all().filter(user=request.user).filter(
+		#     timestamp__gte = passed_start_date,
+		#     timestamp__lt = passed_end_date,
+		# 	).distinct()
 		else:															
-			qs = Ekg.objects.all().filter(user=request.user)	 #return all ekg records
+			qs = Deck.objects.all().filter(user=request.user)	 #return all ekg records
 		return qs
 
 
@@ -116,7 +111,7 @@ class EkgAPIView(mixins.CreateModelMixin,
 
 
 
-	#First checks if data is valid before creating parent record, then creates both parent and child records
+	#Original initialization of deck data
 	def post(self, request, *args, **kwargs):
 		request = self.request
 		print("Post method initiates here")
@@ -125,60 +120,47 @@ class EkgAPIView(mixins.CreateModelMixin,
 			# print("the original json data is: " + str(request.body) + " of type: " +str(type(request.body)))
 			# print('\n\n\n')
 			json_data 		= json.loads(request.body)
-			passed_voltages  = json_data.get('voltages', None)
-			passed_ekgtags   = json_data.get('ekgtags', None)
-			passed_ptags     = json_data.get('ptags', None)
-			# print("Voltages passed are: "+ str(passed_voltages))
-			# print('\n\n\n')
-			# print("Ekgtags passed are: "+ str(passed_ekgtags))
-			# print('\n\n\n')
-			# print("Ptags passed are: "+ str(passed_ptags))
-			# print('\n\n\n')
-			# print("User passed is: " + str(request.user))
-			# print('\n\n\n')
-			equalquantitiesFlag = False
-			if (len(passed_voltages) == len(passed_ekgtags)) and (len(passed_ekgtags) == len(passed_ptags)):
-				equalquantitiesFlag = True
+			passed_deckid  = json_data.get('deckId', None)
 
-			if equalquantitiesFlag and validate_child_records(passed_voltages, passed_ekgtags, passed_ptags, json_data):#all or none
+			#initialize junk deck id's used by pokemon api
+			passed_ids     = {}
+			for i in range(0,60):
+			    tempstring = str(i+1)
+			    passed_ids[i] = "base1-" + tempstring
+
+
+			try:
 				print("Voltages have been confirmed as valid data")
-				returned_response 	 = self.create(request, *args, **kwargs) #creates the parent ekg record
+				returned_response 	 = self.create(request, *args, **kwargs) #creates the parent Deck record
 				content_of_response  = returned_response.data
-				new_ekgId 			 = content_of_response.get('ekgId')#gets the parent id value for the child table(EkgVoltageReadings)
-				json_for_child 		 = {'ekgId': new_ekgId}#comment out for unit test to illustrate parent id validation for newly added record
+				new_deckId 			 = content_of_response.get('deckId')#gets the parent id value for the child table(EkgVoltageReadings)
+				json_for_child 		 = {'deckId': new_deckId}#comment out for unit test to illustrate parent id validation for newly added record
 				# print("ekg id from response is: "+ str(new_ekgId) +" and of type: "+ str(type(new_ekgId)) )
-				json_data.update(json_for_child)
-				for indice in range(0, len(passed_voltages)):
+				json_data.update(json_for_child)#supplies key-value pair needed for cardtransact serializer/table
+				for indice in range(0, len(passed_ids)):
 
-					voltage_value = passed_voltages[indice]
-					ekgtag_value  = passed_ekgtags[indice]
-					ptag_value	  = passed_ptags[indice]
+					cardId_value  = passed_ids[indice]
 
-					volt_pair   = {'voltage_reading': voltage_value}
-					ekgtag_pair	= {'ekgtag': ekgtag_value}
-					ptag_pair   = {'ptag': ptag_value}
+					cardId_pair   = {'cardId': cardId_value}
 
-					json_data.update(volt_pair)
-					json_data.update(ekgtag_pair)
-					json_data.update(ptag_pair)
-					ekgVoltageSerializer = EkgVoltageSerializer(data=json_data)	
-					ekgVoltageSerializer.is_valid()#must be called before save, regardless that we've already validated prior to this
-					ekgVoltageSerializer.save()
-					json_data.pop('voltage_reading', None)#remove to make room for the next voltage reading
-					json_data.pop('ekgtag', None)
-					json_data.pop('ptag', None)
-			else:
+					json_data.update(cardId_pair)
+
+					cardTransactSerializer = CardTransactSerializer(data=json_data)	
+					cardTransactSerializer.is_valid()#must be called before save, regardless that we've already validated prior to this
+					cardTransactSerializer.save()
+					json_data.pop('cardId', None)#remove to make room for the next cardId issued in default deck
+			except:
 				print("Invalid data was sent")
 				return HttpResponseBadRequest("One or more passed values are invalid")
 
+
+
 			#verify voltages were stored
-			qs = EkgVoltageReadings.objects.all().filter(ekgId= new_ekgId)
+			qs = CardTransact.objects.all().filter(deckId= new_deckId)
 			for e in qs:#.filter(ekgId = new_ekgId):
-				print ("Ekg record id: " + str(e.ekgId_id))#_id is concatenated to foreign keys for identification by default
-				print ("Ekg volt id: "+ str(e.ekgVoltId))
-				print ("Ekg volt reading: " + str(e.voltage_reading))
-				print ("Ekg tag: " + str(e.ekgtag))
-				print ("P tag: " + str(e.ptag))
+				print ("CardTransactId is" + str(e.cardTransactId_id))#_id is concatenated to foreign keys for identification by default
+				print ("CardId is: "+ str(e.cardId))
+				print ("Deck id is: " + str(e.deckId))
 			return HttpResponse("Successfully stored records")
 		else:
 
@@ -222,7 +204,7 @@ class EkgAPIView(mixins.CreateModelMixin,
 
 
 #####################################################################################
-# Class    : EkgVoltageReadingAPIView
+# Class    : CardTransactAPIView
 # Purpose  : Implements Retrieval only of child records for data aquisition: Due to the nature of views, 
 #			 a seperate view is required for this transaction to use the correct serializer to present child table
 #			 data to the user
@@ -234,13 +216,13 @@ class EkgAPIView(mixins.CreateModelMixin,
 #            get_queryset() method will then be called. 
 #
 #####################################################################################
-class EkgVoltageReadingAPIView(
+class CardTransactAPIView(
                          generics.ListAPIView):
 	permission_classes          = [permissions.IsAuthenticated]
 	authentication_classes      = [JSONWebTokenAuthentication]
-	serializer_class            = EkgVoltageSerializer
+	serializer_class            = CardTransactSerializer
 
-	#Designed to retrieve all ekg data of a patient, or data based on a passed date
+	#Designed to retrieve all cards of a particular deck
 	def get_queryset(self):
 		# print("Current date: " + str(datetime.now().date()))
 		request = self.request
@@ -250,17 +232,12 @@ class EkgVoltageReadingAPIView(
 		#get the json data of passed key's or they don't exist
 		if is_json(body_):
 			json_data 			= json.loads(request.body)
-		passed_start_date = json_data.get('start_date', None)
-		passed_end_date   = json_data.get('end_date', None)
-		print("Start date passed  " + str(passed_start_date))
-		print("End date passed  " + str(passed_end_date))
+		passed_deckid = json_data.get('deckId', None)
+		
 		qs = ""
-		if passed_end_date is not None and passed_start_date is not None:#return objects of the date range
-			qs = EkgVoltageReadings.objects.select_related('ekgId').filter(ekgId__user=request.user).filter(
-		    ekgId__timestamp__gte = passed_start_date,
-		    ekgId__timestamp__lt = passed_end_date,
-			).distinct()
+		if passed_deckid is not None :#return objects of the date range
+			qs = CardTransact.objects.select_related('deckId').filter(deckId__user=request.user).distinct()
 		else:															
-			qs = EkgVoltageReadings.objects.all()	 #return all
+			return none #if no deck id is passed, we can't return a valid deck
 		return qs
 

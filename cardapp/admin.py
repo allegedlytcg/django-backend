@@ -1,4 +1,4 @@
 from django.contrib import admin
-from cardapp.models import CardTransact, Deck
-admin.site.register(Author)
+from .models import CardTransact, Deck
+admin.site.register(CardTransact,Deck)
 # Register your models here.

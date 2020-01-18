@@ -79,7 +79,7 @@ class DeckAPIView(mixins.CreateModelMixin,
 
 	permission_classes= [permissions.IsAuthenticated]
 	authentication_classes= [JSONWebTokenAuthentication]
-	serializer_class 		= EkgSerializer
+	serializer_class 		= DeckSerializer
 
 
 

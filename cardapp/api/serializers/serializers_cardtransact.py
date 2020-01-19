@@ -14,6 +14,7 @@ class CardTransactSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = CardTransact
 		fields =[
+		'cardTransactId',
 			'deckId',
 			'cardId',
 		]

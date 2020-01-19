@@ -178,7 +178,7 @@ class DeckAPIView(mixins.CreateModelMixin,
 			except Exception as e: 
 				# print(e)
 				print("Invalid data was sent")
-				return HttpResponseBadRequest("Caught at attempt of creation of deck and child records: error was" + str(e) + "Json data during call is" + str(json_data))
+				return HttpResponseBadRequest("Caught at attempt of creation of deck and child records: error was" + str(e) + "content of response after creation is" + str(content_of_response) + "content of json_for_child(parent) deckID " + str(new_deckId))
 
 
 

@@ -12,6 +12,7 @@ class DeckSerializer(serializers.ModelSerializer):#checks these fields and/or re
 		model = Deck
 		fields =[
 			'user',
+			'deckId'
 		
 		]
 		read_only_fields = ['user']

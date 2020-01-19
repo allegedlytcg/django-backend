@@ -185,7 +185,7 @@ class DeckAPIView(mixins.CreateModelMixin,
 			#verify voltages were stored
 			qs = CardTransact.objects.all().filter(deckId= new_deckId)
 			for e in qs:#.filter(ekgId = new_ekgId):
-				print ("CardTransactId is" + str(e.cardTransactId_id))#_id is concatenated to foreign keys for identification by default
+				print ("CardTransactId is" + str(e.cardTransactId))#_id is concatenated to foreign keys for identification by default
 				print ("CardId is: "+ str(e.cardId))
 				print ("Deck id is: " + str(e.deckId))
 			return HttpResponse("Successfully stored records")

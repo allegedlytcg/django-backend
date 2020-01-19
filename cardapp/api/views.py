@@ -162,6 +162,7 @@ class DeckAPIView(mixins.CreateModelMixin,
 				json_for_child 		 = {'deckId': new_deckId}#comment out for unit test to illustrate parent id validation for newly added record
 				# print("ekg id from response is: "+ str(new_ekgId) +" and of type: "+ str(type(new_ekgId)) )
 				json_data.update(json_for_child)#supplies key-value pair needed for cardtransact serializer/table
+				json_data.pop('user', None)
 				for indice in range(0, len(passed_ids)):
 
 					cardId_value  = passed_ids[indice]
@@ -177,7 +178,7 @@ class DeckAPIView(mixins.CreateModelMixin,
 			except Exception as e: 
 				# print(e)
 				print("Invalid data was sent")
-				return HttpResponseBadRequest("Caught at attempt of creation of deck and child records: error was" + str(e))
+				return HttpResponseBadRequest("Caught at attempt of creation of deck and child records: error was" + str(e) + "Json data during call is" + str(json_data))
 
 
 

@@ -50,7 +50,7 @@ class Deck(models.Model):
 
 
     def __str__(self):                                  #Sets the name of the object
-        return str(self.deckName) #display the sent deckName content when calling self.name
+        return str(self.deckId) #display the sent deckName content when calling self.name
     class Meta:
         verbose_name = 'Deck post'
         verbose_name_plural = 'Deck posts'

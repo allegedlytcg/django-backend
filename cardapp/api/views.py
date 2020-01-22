@@ -265,6 +265,6 @@ class CardTransactAPIView(
 		if passed_deckid is not None :#return objects of the date range
 			qs = CardTransact.objects.select_related('deckId').filter(deckId__user=request.user).distinct()
 		else:															
-			return none #if no deck id is passed, we can't return a valid deck
+			return HttpResponseBadRequest("Shit aint workin yo...passed deck id is:" + str(passed_deckid) + "  and request.body is:" + str(body_))
 		return qs
 

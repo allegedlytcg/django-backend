@@ -23,13 +23,13 @@ class CardTransactSerializer(serializers.ModelSerializer):
 
 
 	def validate(self, data): 
-		deckId			= data.get("deckId", None)
+		# deckId			= data.get("deckId", None)
 		cardId 			= data.get("cardId", None)
 		print('Card Transact validates here')
-		if deckId == "":#
-			deckId = None
+		# if deckId == "":#
+		# 	deckId = None
 		if cardId == "":#must be an integer  #toadd or isinstance(ekgId, int) != True
 			cardId = None
-		if deckId is None or cardId is None:
+		if cardId is None:
 			raise serializers.ValidationError("One or more required fields weren't provided")
 		return data

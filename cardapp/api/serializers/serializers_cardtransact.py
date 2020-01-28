@@ -5,7 +5,7 @@ from cardapp.models import CardTransact
 # Serializers -> Json IMPORTANT CONCEPT
 # Serializers -> validate data IMPORTANT CONCEPT
 # 
-# 
+# added comment
 
 
 
